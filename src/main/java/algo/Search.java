@@ -41,7 +41,7 @@ public class Search {
 			else {
 				retval = mid;
 				high = mid - 1;
-			} 
+			}
 		}
 		return retval;
 	}
