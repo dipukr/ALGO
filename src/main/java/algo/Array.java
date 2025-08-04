@@ -66,7 +66,7 @@ public class Array {
 		return maxSum;
 	}
 	
-	public int maxSumSubarray(int[] data) {
+	public int maxSubarraySumSW(int[] data) {
 		int[] opt = new int[data.length];
 		opt[0] = data[0];
 		for (int i = 1; i < data.length; i++)
