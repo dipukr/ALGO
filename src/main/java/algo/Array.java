@@ -67,15 +67,15 @@ public class Array {
 	}
 	
 	public int maxSubarraySumSW(int[] data) {
-		int[] opt = new int[data.length];
-		opt[0] = data[0];
+		int[] sum = new int[data.length];
+		sum[0] = data[0];
 		for (int i = 1; i < data.length; i++)
-			opt[i] = opt[i - 1] + data[i];
+			sum[i] = sum[i - 1] + data[i];
 		int low = 0;
 		int high = data.length - 1;
 		int max = Integer.MIN_VALUE;
 		while (low < high) {
-			int r = opt[high] - (low == 0 ? 0 : opt[low - 1]);
+			int r = sum[high] - (low == 0 ? 0 : sum[low - 1]);
 			int l = r - data[low];
 			int h = r - data[high];
 			if (l > h) {
@@ -89,6 +89,34 @@ public class Array {
 		return max;
 	}
 	
+	public int maxSubarraySumSW2(int[] data) {
+		int[] sum = getPrefixSum(data);
+		int low = 0;
+		int high = data.length - 1;
+		int max = Integer.MIN_VALUE;
+		while (low < high) {
+			int wsum = sum[high] - (low == 0 ? 0 : sum[low - 1]);
+			int lsum = wsum - data[low];
+			int hsum = wsum - data[high];
+			if (lsum > hsum) {
+				low += 1;
+				max = Math.max(max, lsum);
+			} else {
+				high -= 1;
+				max = Math.max(max, hsum);
+			}
+		}
+		return max;
+	}
+	
+	public int[] getPrefixSum(int[] data) {
+		int[] sum = new int[data.length];
+		sum[0] = data[0];
+		for (int i = 1; i < data.length; i++)
+			sum[i] = sum[i - 1] + data[i];
+		return sum;
+	}
+
 	public int[] reverse(int[] data) {
 		int[] result = new int[data.length];
 		for (int i = 0; i < data.length; i++)
@@ -146,9 +174,25 @@ public class Array {
 		return smallest;
 	}
 	
+	public int smallestSubarrayWithSumS(int[] data, int S) {
+		int ans = Integer.MAX_VALUE;
+		int l = 0;
+		int r = 0;
+		int sum = 0;
+		while (l < data.length && r < data.length) {
+			if (sum >= S) {
+				ans = Math.min(ans, r - l + 1);
+				sum -= data[l++];
+			} else {
+				sum += data[r++];
+			}
+		}
+		return ans;
+	}
+	
 	public void test() {
-		int[] data = new int[] {10,20,30,40,40,60,70,80,90,100};
-		System.out.println(data);
+		int[] data = new int[] {5,1,3,5,10,7,4,9,2,8};
+		System.out.println(smallestSubarrayWithSumS(data, 15));
 	}
 	
 	public static void main(String[] args) {
