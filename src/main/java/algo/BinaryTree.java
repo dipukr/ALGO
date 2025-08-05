@@ -167,6 +167,13 @@ public class BinaryTree {
 			invertTree(node.right);
 		}
 	}
+	
+	public void reverseTree(Node root) {
+		if (root == null) return;
+		reverseTree(root.left);
+		reverseTree(root.right);
+		
+	}
 
 	public void levelWiseBFS(Node root) {
 		var queue = new LinkedList<Node>();
@@ -257,6 +264,15 @@ public class BinaryTree {
 			path.addLast(root.data);
 			return true;
 		}
+		return false;
+	}
+	
+	public boolean getPath(Node root, int val, Deque<Integer> path) {
+		if (root == null) return false;
+		path.addLast(root.data);
+		if (root.data == val || getPath(root.left, val, path) || getPath(root.right, val, path))
+			return true;
+		path.removeLast();
 		return false;
 	}
 	

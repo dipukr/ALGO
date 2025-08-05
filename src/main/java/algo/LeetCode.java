@@ -21,7 +21,7 @@ public class LeetCode {
 	}
 	
 	@Leet("448")
-	public List<Integer> missingNumbersA(int[] nums) {
+	public List<Integer> missingNumbers2(int[] nums) {
 		var missingNums = new ArrayList<Integer>();
 		for (int i = 0; i < nums.length; i++) {
 			int num = Math.abs(nums[i]);

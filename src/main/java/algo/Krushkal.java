@@ -14,9 +14,9 @@ public class Krushkal {
 	public int solve() {
 		int sum = 0;
 		for (Edge edge: edges) {
-			if (uf.connected(edge.from, edge.to))
+			if (uf.connected(edge.start, edge.end))
 				continue;
-			uf.union(edge.from, edge.to);
+			uf.union(edge.start, edge.end);
 			sum += edge.weight;
 		}
 		return sum;

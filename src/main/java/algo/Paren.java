@@ -24,7 +24,7 @@ public class Paren {
 				if (stack.isEmpty() || !match(ch, stack.peek()))
 					return false;
 				else stack.pop();
-			} else Error.fatal(Error.WRONG_INPUT);
+			} else Error.fatal("illegal expression");
 		}
 		return stack.isEmpty();
 	}
