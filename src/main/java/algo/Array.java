@@ -18,9 +18,9 @@ public class Array {
 		printArray(data, 0, data.length - 1);
 	}
 	
-	public int sumArray(int[] data, int lower, int upper) {
+	public int sumArray(int[] data, int low, int high) {
 		int sum = 0;
-		for (int i = lower; i <= upper; i++)
+		for (int i = low; i <= high; i++)
 			sum += data[i];
 		return sum;
 	}
@@ -51,16 +51,21 @@ public class Array {
 		return maxSum;
 	}
 	
-	public int maxSubarraySumDP(int[] data) {
-		int maxSum = Integer.MIN_VALUE;
-		int[] cache = new int[data.length];
-		cache[0] = data[0];
+	public int[] getPrefixSum(int[] data) {
+		int[] sum = new int[data.length];
+		sum[0] = data[0];
 		for (int i = 1; i < data.length; i++)
-			cache[i] = cache[i - 1] + data[i];
+			sum[i] = sum[i - 1] + data[i];
+		return sum;
+	}
+	
+	public int maxSubarraySumDP(int[] data) {
+		int[] sum = getPrefixSum(data);
+		int maxSum = Integer.MIN_VALUE;
 		for (int i = 0; i < data.length; i++) {
 			for (int j = i; j < data.length; j++) {
-				int sum = cache[j] - (i == 0 ? 0 : cache[i - 1]);
-				maxSum = Math.max(maxSum, sum);
+				int currSum = sum[j] - (i == 0 ? 0 : sum[i - 1]);
+				maxSum = Math.max(maxSum, currSum);
 			}
 		}
 		return maxSum;
@@ -109,14 +114,6 @@ public class Array {
 		return max;
 	}
 	
-	public int[] getPrefixSum(int[] data) {
-		int[] sum = new int[data.length];
-		sum[0] = data[0];
-		for (int i = 1; i < data.length; i++)
-			sum[i] = sum[i - 1] + data[i];
-		return sum;
-	}
-
 	public int[] reverse(int[] data) {
 		int[] result = new int[data.length];
 		for (int i = 0; i < data.length; i++)

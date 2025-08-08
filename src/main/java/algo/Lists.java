@@ -18,7 +18,7 @@ public class Lists {
 	
 	public void dumpReverse(Node head) {
 		if (head == null) return;
-		else dumpReverse(head.next);
+		dumpReverse(head.next);
 		System.out.printf("%d->", head.data);
 	}
 	
