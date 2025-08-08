@@ -1,5 +1,7 @@
 package algo;
 
+import java.util.Arrays;
+
 public class DP {
 
 	public int fib(int n, int[] cache) {
@@ -41,7 +43,7 @@ public class DP {
 	public int minCoins(int[] coins, int target) {
 		if (target == 0) return 0;
 		int minVal = Integer.MAX_VALUE;
-		for (int coin : coins) {
+		for (int coin: coins) {
 			if (target - coin >= 0) {
 				int subMinVal = minCoins(coins, target - coin);
 				if (subMinVal + 1 < minVal) {
@@ -53,22 +55,24 @@ public class DP {
 	}
 
 	public int minCoins(int[] coins, int target, int[] cache) {
-		if (target == 0) return 0;
+		if (target <= 0) return 0;
 		if (cache[target] != -1) return cache[target];
 		int minVal = Integer.MAX_VALUE;
 		for (int coin: coins) {
-			int subTarget = target - coin;
-			if (subTarget >= 0) {
-				int subMinVal = minCoins(coins, subTarget, cache) + 1;
+			if (target - coin >= 0) {
+				int subMinVal = minCoins(coins, target - coin, cache);
 				minVal = Math.min(subMinVal, minVal);
 			}
 		}
-		return cache[target] = minVal;
+		return cache[target] = minVal + 1;
 	}
 	
 	public static void main(final String[] args) {
 		var dp = new DP();
-		System.out.println(dp);
-		System.out.println(dp.climbStairs(3));
+		//System.out.println(dp.climbStairs(3));
+		int[] cache = new int[19];
+		Arrays.fill(cache, -1);
+		cache[0] = 0;
+		System.out.println(dp.minCoins(new int[] {7, 5, 1}, 18, cache));
 	}
 }
