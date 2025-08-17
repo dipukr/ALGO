@@ -94,7 +94,7 @@ public class BinaryTree {
 	public void levelOrderTraversal(Node root) {
 		int height = height(root);
 		for (int levelNo = 1; levelNo <= height; levelNo++) {
-			Console.format("Level %d: ", levelNo);
+			Console.draw("Level %d: ", levelNo);
 			printByLevel(root, levelNo);
 			System.out.println();
 		}
@@ -161,7 +161,7 @@ public class BinaryTree {
 		stack.push(root);
 		while (!stack.isEmpty()) {
 			Node node = stack.pop();
-			Console.format("%s\t", node.data);
+			Console.draw("%s\t", node.data);
 			if (node.left != null)
 				stack.push(node.left);
 			if (node.right != null)
@@ -173,7 +173,7 @@ public class BinaryTree {
 		if (root == null) return;
 		DFS(root.left);
 		DFS(root.right);
-		Console.format("%s\t", root.data);
+		Console.draw("%s\t", root.data);
 	}
 	
 	@REM("BottomUP")

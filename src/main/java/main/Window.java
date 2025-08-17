@@ -2,7 +2,7 @@ package main;
 
 import java.util.HashSet;
 
-public class SW {
+public class Window {
 	
 	@Leet("3")
 	public int lengthOfLongestSubstring(String s) {
@@ -25,7 +25,7 @@ public class SW {
 	
 	
 	public static void main(final String[] args) {
-		var algo = new SW();
+		var algo = new Window();
 		System.out.println(algo.lengthOfLongestSubstring("abcabcbb"));
 	}
 }

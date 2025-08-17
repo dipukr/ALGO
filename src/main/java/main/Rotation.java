@@ -10,7 +10,7 @@ class Node {
 	}
 }
 
-public class Rotations {
+public class Rotation {
 	
 	
 	public void leftRotate(Node root) {

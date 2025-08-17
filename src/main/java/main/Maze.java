@@ -35,6 +35,8 @@ public class Maze extends JPanel {
 	private static final String RESET = "\u001B[0m";
 	private static final String RED = "\u001B[31m";
 	
+	record Point(int x, int y) {}
+	
 	private int[][] maze;
 	private int rows;
 	private int cols;
@@ -73,19 +75,19 @@ public class Maze extends JPanel {
 			if (isGoal(row, col)) return true;
 			maze[row][col] = 2;
 			if (hasPath(row, col - 1, path)) {
-				path.addLast(Point.of(row, col - 1));
+				path.addLast(new Point(row, col - 1));
 				return true;
 			}
 			if (hasPath(row, col + 1, path)) {
-				path.addLast(Point.of(row, col + 1));
+				path.addLast(new Point(row, col + 1));
 				return true;
 			}
 			if (hasPath(row - 1, col, path)) {
-				path.addLast(Point.of(row - 1, col));
+				path.addLast(new Point(row - 1, col));
 				return true;
 			}
 			if (hasPath(row + 1, col, path)) {
-				path.addLast(Point.of(row + 1, col));
+				path.addLast(new Point(row + 1, col));
 				return true;
 			}
 			maze[row][col] = 0;
@@ -131,7 +133,7 @@ public class Maze extends JPanel {
 			.forEach(System.out::println);
 	}
 
-	public static void main(final String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		int data[][] = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1},
@@ -174,7 +176,7 @@ public class Maze extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		var path = new LinkedList<Point>();
 		if (maze.hasPath(1, 1, path)) {
-			path.addLast(Point.of(1, 1));
+			path.addLast(new Point(1, 1));
 		}
 		System.out.println(path);
 		while (!path.isEmpty()) {
