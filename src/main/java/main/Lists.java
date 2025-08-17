@@ -25,17 +25,13 @@ public class Lists {
 	public int size(Node head) {
 		int count = 0;
 		for (Node iter = head; iter != null; iter = iter.next)
-			count++;
+			count += 1;
 		return count;
 	}
 	
 	public int length(Node head) {
 		if (head == null) return 0;
-		else return length(head.next) + 1;
-	}
-	
-	public boolean notEmpty(Node head) {
-		return !empty(head);
+		return length(head.next) + 1;
 	}
 	
 	public boolean empty(Node head) {
@@ -43,15 +39,15 @@ public class Lists {
 	}
 	
 	public void addLast(Node head, int data) {
-		Node iter = head;
-		while (iter.next != null)
-			iter = iter.next;
-		iter.next = new Node(data);
+		Node curr = head;
+		while (curr.next != null)
+			curr = curr.next;
+		curr.next = new Node(data);
 	}
 	
 	public void appendLast(Node head, int data) {
 		if (head.next == null) head.next = new Node(data);
-		else appendLast(head.next, data);
+		appendLast(head.next, data);
 	}
 	
 	public void insertAfter(Node after, int data) {
@@ -61,23 +57,23 @@ public class Lists {
 	}
 	
 	public void deleteTail(Node head) {
-		Node iter = head;
-		while (iter.next.next != null)
-			iter = iter.next;
-		iter.next = null;
+		Node curr = head;
+		while (curr.next.next != null)
+			curr = curr.next;
+		curr.next = null;
 	}
 	
 	public void deleteLast(Node head) {
 		if (head.next.next == null) head.next = null;
-		else deleteLast(head.next);
+		deleteLast(head.next);
 	}
 	
 	public void deleteNode(Node head, Node node) {
-		Node iter = head;
-		while (iter.next != null && iter.next != node)
-			iter = iter.next;
-		if (iter.next == node)
-			iter.next = node.next;
+		Node curr = head;
+		while (curr.next != null && curr.next != node)
+			curr = curr.next;
+		if (curr.next == node)
+			curr.next = node.next;
 	}
 	
 	public void deleteByValue(Node head, int val) {
@@ -89,45 +85,41 @@ public class Lists {
 	}
 	
 	public boolean searchElement(Node head, int key) {
-		Node iter = head;
-		while (iter != null) {
-			if (iter.data == key) return true;
-			iter = iter.next;
+		Node curr = head;
+		while (curr != null) {
+			if (curr.data == key) return true;
+			curr = curr.next;
 		}
 		return false;
 	}
 	
-	public Node mergeSortedLists(Node firstHead, Node secondHead) {
-		Node resultHead = new Node(0);
-		Node first = firstHead;
-		Node second = secondHead;
-		Node result = resultHead;
+	public Node mergeSortedLists(Node first, Node second) {
+		Node sentinel = new Node(0);
+		Node curr = sentinel;
 		while (first != null && second != null) {
 			if (first.data < second.data) {
-				result.next = first;
+				curr.next = first;
 				first = first.next;
 			} else {
-				result.next = second;
+				curr.next = second;
 				second = second.next;
 			}
-			result = result.next;
+			curr = curr.next;
 		}
 		while (first != null) {
-			result.next = first;
+			curr.next = first;
 			first = first.next;
-			result = result.next;
+			curr = curr.next;
 		}
 		while (second != null) {
-			result.next = second;
+			curr.next = second;
 			second = second.next;
-			result = result.next;
+			curr = curr.next;
 		}
-		return resultHead.next;
+		return sentinel.next;
 	}
 	
-	public void evensAfterOdds(Node head) {
-		
-	}
+	public void evensAfterOdds(Node head) {}
 	
 	public Node reverseList(Node head) {
 		Node prev = null, curr = head;
@@ -291,8 +283,8 @@ public class Lists {
 		for (int i = 2; i <= 10; i++)
 			addLast(head, i * 10);
 		dump(head);
-		head = reverse(head);
-		dumpReverse(head);
+		head = reverseK(head, 4);
+		dump(head);
 	}
 	
 	public static void main(final String[] args) {

@@ -12,14 +12,7 @@ public class Bits {
 		System.out.print(bit);
 	}
 
-	public void printBitsReversed(int n) {
-		while (n != 0) {
-			System.out.print(n % 2);
-			n = n / 2;
-		}
-	}
-
-	public void printBitsReversed2(int n) {
+	public void printRev(int n) {
 		while (n != 0) {
 			System.out.print(n % 2);
 			n = n / 2;
@@ -31,23 +24,46 @@ public class Bits {
 		return (n & mask) == 0 ? 0 : 1;
 	}
 
-	public void setBit(int n, int pos) {
+	public int setBit(int n, int pos) {
 		int mask = (1 << pos);
-		n = n | mask;
+		return n | mask;
 	}
 
-	public void clearBit(int n, int pos) {
+	public int clearBit(int n, int pos) {
+		int mask = ~(1 << pos);
+		return n & mask;
+	}
+	
+	public int flipBit(int n, int pos) {
+		int mask = (1 << pos);
+		return n ^ mask;
+	}
+
+	public int updateBit(int n, int pos, int val) {
 		int mask = ~(1 << pos);
 		n = n & mask;
+		return n | (val << pos);
 	}
 
-	public void updateBit(int n, int pos, int val) {
-		int mask = ~(1 << pos);
-		n = n & mask;
-		n = n | (val << pos);
-	}
-
-	public boolean powerOf2(int n) {
+	public boolean even(int n) {
 		return getBit(n, 0) == 0;
+	}
+	
+	public boolean odd(int n) {
+		return getBit(n, 0) == 1;
+	}
+	
+	public boolean isPowerOfTwo(int n) {
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		Bits a = new Bits();
+		int n = 1729;
+		a.printBits(n);
+		System.out.println();
+		System.out.println(a.getBit(n, 6));
+		System.out.println(a.even(n));
+		System.out.println(a.odd(n));
 	}
 }

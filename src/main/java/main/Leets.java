@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeetCode {
+public class Leets {
 
 	@Leet("448")
 	public List<Integer> missingNumbers(List<Integer> nums) {

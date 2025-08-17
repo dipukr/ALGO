@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
 
@@ -99,12 +100,41 @@ public class BinaryTree {
 		}
 	}
 	
-	public void leftView(Node root, LinkedList<Integer> data) {
-		if (root != null) {
-			data.addLast(root.data);
-			leftView(root.left, data);
+	public List<Integer> leftView(Node root) {
+		List<Integer> answer = new ArrayList<>();
+		if (root == null) return answer;
+		Queue<Node> queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node node = queue.poll();
+				if (node.left != null) queue.offer(node.left);
+				if (node.right != null) queue.offer(node.right);
+				if (i == 0) answer.add(node.data);
+			}
 		}
+		return answer;
 	}
+	
+	public List<Integer> rightView(Node root) {
+		List<Integer> answer = new ArrayList<>();
+		if (root == null) return answer;
+		Queue<Node> queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node node = queue.poll();
+				if (node.left != null) queue.offer(node.left);
+				if (node.right != null) queue.offer(node.right);
+				if (i == size - 1) answer.add(node.data);
+			}
+		}
+		return answer;
+	}
+	
+	
 	
 	public int treeSum(Node root) {
 		if (root == null) return 0;
@@ -289,7 +319,7 @@ public class BinaryTree {
 		if (node.right != null) valid = valid && node.right.data < node.data;
 		return valid && binarySearchTree(node.left) && binarySearchTree(node.right);
 	}
-		
+	
 	public void test() {
 		Node root = new Node(40);
 		root.left = new Node(20);

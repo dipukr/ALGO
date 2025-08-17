@@ -7,14 +7,14 @@ public class Recursion {
 
 	public long factorial(long n) {
 		return (n == 0) ?
-				1 :
-				n * factorial(n - 1);
+			1 :
+			n * factorial(n - 1);
 	}
 
 	public long fibonacci(long n) {
 		return (n == 1 || n == 2) ?
-				n :
-				fibonacci(n - 1) + fibonacci(n -2);
+			n :
+			fibonacci(n - 1) + fibonacci(n -2);
 	}
 
 	public long sum(long n) {
@@ -54,6 +54,8 @@ public class Recursion {
 			printDigit(n / 10);
 		System.out.print(n % 10);
 	}
+	
+	
 
 	public void printDigit(int num, int base) {
 		if (num >= base)
