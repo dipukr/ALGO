@@ -1,7 +1,8 @@
 package main;
 
-public class Sort {
+import common.Console;
 
+public class Sort {
 	public void swap(double[] data, int i, int j) {
 		double temp = data[i];
 		data[i] = data[j];
@@ -61,8 +62,6 @@ public class Sort {
 			merge(arr, buf, low, mid, high);
 		}
 	}
-
-
 	
 	public void mergeSort(double[] arr) {
 		var buf = new double[arr.length];
@@ -93,15 +92,15 @@ public class Sort {
 		quickSort(arr, 0, arr.length - 1);
 	}
 
-	public static void main(final String[] args) {
-		final int N = 20_000_000;
-		double[] array = new double[N];
-		for (int a = 0; a < array.length; a++)
-			array[a] = Math.random() * N;
-		var alg = new Sort();
+	public static void main(String[] args) {
+		final int N = 100_000;
+		double[] data = new double[N];
+		for (int a = 0; a < data.length; a++)
+			data[a] = Math.random() * N;
+		var sort = new Sort();
 		long start = System.currentTimeMillis();
-		alg.quickSort(array);
+		sort.insertion(data);
 		long end = System.currentTimeMillis();
-		System.out.printf("Total time elapsed: %f seconds.\n", (end - start) / 1000.0);
+		Console.draw("Total time elapsed: %f seconds.\n", (end - start) / 1000.0);
 	}
 }

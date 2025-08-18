@@ -1,8 +1,7 @@
 package main;
 
 public class LCS {
-
-	public String LCS(String x, String y) {
+	public String lcs(String x, String y) {
 		int m = x.length();
 		int n = y.length();
 		int[][] opt = new int[m + 1][n + 1];
@@ -28,23 +27,15 @@ public class LCS {
 		return lcs;
 	}
 	
-	public int LCS(String x, String y, int i, int j) {
+	public int lcs(String x, String y, int i, int j) {
 		if (i == x.length() || j == y.length()) return 0;
-		if (x.charAt(i) == y.charAt(j)) return 1 + LCS(x, y, i + 1, j + 1);
-		return Math.max(LCS(x, y, i, j + 1), LCS(x, y, i + 1, j));
+		if (x.charAt(i) == y.charAt(j)) return 1 + lcs(x, y, i + 1, j + 1);
+		return Math.max(lcs(x, y, i, j + 1), lcs(x, y, i + 1, j));
 	}
 	
-	public int LCS(int[] A, int[] B, int i, int j) {
+	public int lcs(int[] A, int[] B, int i, int j) {
 		if (i == A.length || j == B.length) return 0;
-		if (A[i] == B[j]) return 1 + LCS(A, B, i + 1, j + 1);
-		return Math.max(LCS(A, B, i, j + 1), LCS(A, B, i + 1, j));
-	}
-	
-	public void test() {
-		System.out.println(LCS("RISHABH", "SHUBHI"));
-	}
-
-	public static void main(String[] args) {
-		new LCS().test();
+		if (A[i] == B[j]) return 1 + lcs(A, B, i + 1, j + 1);
+		return Math.max(lcs(A, B, i, j + 1), lcs(A, B, i + 1, j));
 	}
 }

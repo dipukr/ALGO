@@ -1,5 +1,7 @@
 package main;
 
+import common.Leet;
+
 public class Lists {
 
 	public class Node {

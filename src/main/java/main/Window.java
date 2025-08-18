@@ -2,6 +2,8 @@ package main;
 
 import java.util.HashSet;
 
+import common.Leet;
+
 public class Window {
 	
 	@Leet("3")

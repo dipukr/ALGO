@@ -1,21 +1,36 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import common.Console;
 
 public class Array {
-	
-	public void printArray(int[] data, int low, int high) {
-		System.out.print("[");
-		for (int i = low; i <= high; i++) {
-			if (i > low) System.out.print(",");
-			System.out.printf("%d", data[i]);
+	public List<int[]> subarrays(int[] data) {
+		var subArrays = new ArrayList<int[]>();
+		for (int start = 0; start < data.length; start++) {
+			for (int end = start; end < data.length; end++) {
+				int[] subArray = new int[end - start + 1];
+				for (int k = start; k <= end; k++)
+					subArray[k - start] = data[k];
+				subArrays.add(subArray);
+			}
 		}
-		System.out.println("]");
+		return subArrays;
 	}
 	
-	public void printArray(int[] data) {
-		printArray(data, 0, data.length - 1);
+	public void print(int[] data, int low, int high) {
+		Console.draw("[");
+		for (int i = low; i <= high; i++) {
+			if (i > low) Console.draw(",");
+			Console.draw("%d", data[i]);
+		}
+		Console.draw("]");
+	}
+	
+	public void print(int[] data) {
+		print(data, 0, data.length - 1);
 	}
 	
 	public int sumArray(int[] data, int low, int high) {
@@ -32,7 +47,7 @@ public class Array {
 	public void printSubarray(int[] data) {
 		for (int i = 0; i < data.length; i++)
 			for (int j = i; j < data.length; j++)
-				printArray(data, i, j);
+				print(data, i, j);
 	}
 	
 	public int sumSubarrays(int[] data) {
@@ -159,18 +174,6 @@ public class Array {
 		return false;
 	}
 	
-	public int smallestNumberMissing(int[] data) {
-		var flag = new boolean[data.length];
-		Arrays.fill(flag, false);
-		for (int i = 0; i < data.length; i++)
-			flag[data[i]] = true;
-		int smallest = -1;
-		for (int i = 0; i < flag.length; i++)
-			if (flag[i] == false)
-				smallest = Math.min(smallest, i);
-		return smallest;
-	}
-	
 	public int smallestSubarrayWithSumS(int[] data, int S) {
 		int ans = Integer.MAX_VALUE;
 		int l = 0;
@@ -185,15 +188,5 @@ public class Array {
 			}
 		}
 		return ans;
-	}
-	
-	public void test() {
-		int[] data = new int[] {5,1,3,5,10,7,4,9,2,8};
-		System.out.println(smallestSubarrayWithSumS(data, 15));
-	}
-	
-	public static void main(String[] args) {
-		var array = new Array();
-		array.test();
 	}
 }

@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.Leet;
+
 public class Leets {
 
 	@Leet("448")
