@@ -9,9 +9,6 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
 
-import common.Console;
-import common.REM;
-
 public class BinaryTree {
 
 	public class Node {

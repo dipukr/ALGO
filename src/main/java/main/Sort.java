@@ -1,7 +1,5 @@
 package main;
 
-import common.Console;
-
 public class Sort {
 	public void swap(double[] data, int i, int j) {
 		double temp = data[i];

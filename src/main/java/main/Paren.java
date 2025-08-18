@@ -1,7 +1,6 @@
 package main;
 
 import java.util.Stack;
-import common.Error;
 
 public class Paren {
 	

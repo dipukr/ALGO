@@ -2,11 +2,7 @@ package main;
 
 import java.util.HashSet;
 
-import common.Leet;
-
 public class Window {
-	
-	@Leet("3")
 	public int lengthOfLongestSubstring(String s) {
 		int start = 0, end = 0;
 		int maxLen = 0;
