@@ -1,7 +1,6 @@
 package main;
 
 public class Bits {
-
 	public void printBits(int n) {
 		if (n < 2) {
 			System.out.print(n);
