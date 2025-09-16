@@ -20,18 +20,36 @@ public class BinaryTree {
 		}
 	}
 	
-	public int size(Node node) {
-		if (node == null) return 0;
-		int leftSize = size(node.left);
-		int rightSize = size(node.right);
-		return leftSize + rightSize + 1;
+	public int size(Node root) {
+		int nodeCount = 0;
+		if (root == null) return nodeCount;
+		var queue = new LinkedList<Node>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			nodeCount += 1;
+			Node node = queue.poll();
+			if (node.left != null) queue.offer(node.left);
+			if (node.right != null) queue.offer(node.right);
+		}
+		return nodeCount;
 	}
 	
-	public int height(Node node) {
-		if (node == null) return 0;
-		int leftHeight = height(node.left);
-		int rightHeight = height(node.right);
-		return Math.max(leftHeight, rightHeight) + 1;
+	public int height(Node root) {
+		var queue = new LinkedList<Node>();
+		queue.offer(root);
+		queue.offer(null);
+		int level = 0;
+		while (!queue.isEmpty()) {
+			Node node = queue.poll();
+			if (node != null) {
+				if (node.left != null) queue.offer(node.left);
+				if (node.right != null) queue.offer(node.right);
+			} else if (!queue.isEmpty()) {
+				level += 1;
+				queue.offer(null);
+			}
+		}
+		return level;
 	}
 	
 	public void visit(Node node) {
@@ -148,61 +166,21 @@ public class BinaryTree {
 		queue.offer(root);
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
-			System.out.printf("%s\t", node.data);
-			if (node.left != null)
-				queue.offer(node.left);
-			if (node.right != null)
-				queue.offer(node.right);
-		}
-	}
-	
-	public void depthFirstSearch(Node root) {
-		var stack = new Stack<Node>();
-		stack.push(root);
-		while (!stack.isEmpty()) {
-			Node node = stack.pop();
-			Console.draw("%s\t", node.data);
-			if (node.left != null)
-				stack.push(node.left);
-			if (node.right != null)
-				stack.push(node.right);
+			visit(node);
+			if (node.left != null) queue.offer(node.left);
+			if (node.right != null) queue.offer(node.right);
 		}
 	}
 	
 	public void DFS(Node root) {
-		if (root == null) return;
-		DFS(root.left);
-		DFS(root.right);
-		Console.draw("%s\t", root.data);
-	}
-	
-	@REM("BottomUP")
-	public Node invert(Node node) {
-		if (node != null) {
-			Node leftTree = invert(node.left);
-			Node rightTree = invert(node.right);
-			node.left = rightTree;
-			node.right = leftTree;
+		var stack = new Stack<Node>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			visit(node);
+			if (node.left != null) stack.push(node.left);
+			if (node.right != null) stack.push(node.right);
 		}
-		return node;
-	}
-	
-	@REM("TopDown")
-	public void invertTree(Node node) {
-		if (node != null) {
-			Node saved = node.left;
-			node.left = node.right;
-			node.right = saved;
-			invertTree(node.left);
-			invertTree(node.right);
-		}
-	}
-	
-	public void reverseTree(Node root) {
-		if (root == null) return;
-		reverseTree(root.left);
-		reverseTree(root.right);
-		
 	}
 
 	public void levelWiseBFS(Node root) {
@@ -210,17 +188,17 @@ public class BinaryTree {
 		queue.offer(root);
 		queue.offer(null);
 		int level = 1;
-		System.out.printf("Level %d: ", level);
+		Console.draw("Level %d: ", level);
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
 			if (node != null) {
-				System.out.printf("%d\t", node.data);
+				Console.draw("%d\t", node.data);
 				if (node.left != null) queue.offer(node.left);
 				if (node.right != null) queue.offer(node.right);
 			} else if (!queue.isEmpty()) {
 				level++;
 				queue.offer(null);
-				System.out.printf("\nLevel %d: ", level);
+				Console.draw("\nLevel %d: ", level);
 			}
 		}
 	}
@@ -247,77 +225,6 @@ public class BinaryTree {
 		}
 		levelWiseSum.put(levelNo, levelSum);
 		return levelWiseSum;
-	}
-	
-	public int leftLeavesSum(Node root) {
-		return leftLeavesSum(root, false);
-	}
-	
-	public int leftLeavesSum(Node root, boolean leftChild) {
-		if (root == null) return 0;
-		if (leftChild && root.left == null && root.right == null)
-			return root.data;
-		int leftSum = leftLeavesSum(root.left, true);
-		int rightSum = leftLeavesSum(root.left, true);
-		return leftSum + rightSum;
-	}
-	
-	public boolean hasPathDFS(Node node, int val, LinkedList<Integer> path) {
-		if (node == null) return false;
-		path.addLast(node.data);
-		if (node.data == val || hasPathDFS(node.left, val, path) || hasPathDFS(node.right, val, path))
-			return true;
-		path.removeLast();
-		return false;
-	}
-	
-	public boolean hasPath(Node root, int val, Deque<Integer> path) {
-		if (root == null) return false;
-		if (root.data == val) {
-			path.addLast(root.data);
-			return true;
-		}
-		if (hasPath(root.left, val, path)) {
-			path.addLast(root.data);
-			return true;
-		}
-		if (hasPath(root.right, val, path)) {
-			path.addLast(root.data);
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean findPath(Node root, int val, Deque<Integer> path) {
-		if (root == null) return false;
-		if (root.data == val || findPath(root.left, val, path) || findPath(root.right, val, path)) {
-			path.addLast(root.data);
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean getPath(Node root, int val, Deque<Integer> path) {
-		if (root == null) return false;
-		path.addLast(root.data);
-		if (root.data == val || getPath(root.left, val, path) || getPath(root.right, val, path))
-			return true;
-		path.removeLast();
-		return false;
-	}
-	
-	public boolean contains(Node root, int key) {
-		if (root == null) return false;
-		if (root.data == key) return true;
-		return contains(root.left, key) || contains(root.right, key);
-	}
-	
-	public boolean binarySearchTree(Node node) {
-		if (node == null) return true;
-		boolean valid = true;
-		if (node.left != null) valid = valid && node.left.data < node.data;
-		if (node.right != null) valid = valid && node.right.data < node.data;
-		return valid && binarySearchTree(node.left) && binarySearchTree(node.right);
 	}
 	
 	public void test() {
