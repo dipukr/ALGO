@@ -1,7 +1,6 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,10 @@ public class BinaryTree {
 		public Node(int data) {
 			this.data = data;
 		}
+	}
+	
+	public void visit(Node node) {
+		System.out.printf("%d\t", node.data);
 	}
 	
 	public int size(Node root) {
@@ -52,43 +55,87 @@ public class BinaryTree {
 		return level;
 	}
 	
-	public void visit(Node node) {
-		System.out.printf("%d\t", node.data);
-	}
-	
-	public void preorder(Node root) {
-		if (root != null) {
-			visit(root);
-			preorder(root.left);
-			preorder(root.right);
+	public List<Integer> preorder(Node root) {
+		List<Integer> result = new ArrayList<>();
+		var stack = new Stack<Node>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			result.add(node.data);
+			if (node.left != null) stack.add(node.left);
+			if (node.right != null) stack.add(node.right);
 		}
+		return result;
 	}
 	
-	public void inorder(Node root) {
-		if (root != null) {
-			inorder(root.left);
-			visit(root);
-			inorder(root.right);
+	public List<Integer> inorder(Node root) {
+		List<Integer> result = new ArrayList<>();
+		var stack = new Stack<Node>();
+		Node curr = root;
+		while (curr != null && !stack.isEmpty()) {
+			while (curr != null) {
+				stack.push(curr);
+				curr = curr.left;
+			}
+			curr = stack.pop();
+			result.add(curr.data);
+			curr = curr.right;
 		}
+		return result;
 	}
 	
-	public void postorder(Node root) {
-		if (root != null) {
-			postorder(root.left);
-			postorder(root.right);
-			visit(root);
+	public List<Integer> postorder(Node root) {
+		List<Integer> result = new ArrayList<>();
+		if (root == null) return result;
+		var stack1 = new Stack<Node>();
+		var stack2 = new Stack<Node>();
+		while (!stack1.isEmpty()) {
+			Node node = stack1.pop();
+			stack2.push(node);
+			if (node.left != null) stack1.push(node.left);
+			if (node.right != null) stack1.push(node.right);
 		}
+		while (!stack2.isEmpty()) {
+			Node node = stack2.pop();
+			result.add(node.data);
+		}
+		return result;
 	}
 	
-	public void leverOrder(Node root) {
+	public List<Integer> postOrder(Node root) {
+		List<Integer> result = new ArrayList<>();
+		if (root == null) return result;
+		var stack = new Stack<Node>();
+		Node curr = root;
+		Node prev = null;
+		while (curr != null || !stack.isEmpty()) {
+			if (curr != null) {
+				stack.push(curr);
+				curr = curr.left;
+			} else {
+				Node node = stack.peek();
+				if (node.right != null && prev != node.right) {
+					curr = node.right;
+				} else {
+					result.add(node.data);
+					prev = stack.pop();
+				}
+			}
+		}
+		return result;
+	}
+	
+	public List<Integer> leverOrder(Node root) {
+		List<Integer> result = new ArrayList<>();
 		var queue = new LinkedList<Node>();
 		queue.offer(root);
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
-			visit(node);
+			result.add(node.data);
 			if (node.left != null) queue.offer(node.left);
 			if (node.right != null) queue.offer(node.right);
 		}
+		return result;
 	}
 	
 	public void printByLevel(Node root, int level) {
@@ -151,8 +198,6 @@ public class BinaryTree {
 		}
 		return answer;
 	}
-	
-	
 	
 	public int treeSum(Node root) {
 		if (root == null) return 0;
@@ -241,7 +286,7 @@ public class BinaryTree {
 		System.out.println(levelWiseSum(root));
 	}
 
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		var tree = new BinaryTree();
 		tree.test();
 	}
