@@ -1,8 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Leets {
 	@Leet("324")
 	public String compressedString(String word) {
