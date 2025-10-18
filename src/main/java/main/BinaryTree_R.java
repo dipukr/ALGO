@@ -34,6 +34,17 @@ public class BinaryTree_R {
 		return Math.max(leftHeight, rightHeight) + 1;
 	}
 	
+	@REM("O(N^2)")
+	public int diameter(Node root) {
+		if (root == null) return 0;
+		int diam1 = diameter(root.left);
+		int diam2 = diameter(root.right);
+		int diam3 = height(root.left) + height(root.right) + 1;
+		return Math.max(diam1, Math.max(diam2, diam3));
+	}
+	
+	
+	
 	public void visit(Node node) {
 		Console.draw("%d\t", node.data);
 	}
