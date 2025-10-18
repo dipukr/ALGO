@@ -16,16 +16,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("all")
 public class Maze extends JPanel {
 	
 	private static final Color wallColor = new Color(39,40,34);
+	private static final String GREEN = "\u001B[32m";
 	private static final int margin = 50;
 	private static final int GS = 40;
-	
 	private static Image imageMouse = null;
 	private static Image imageApple = null;
-	
-	private static final String GREEN = "\u001B[32m";
 	
 	record Point(int x, int y) {}
 	
