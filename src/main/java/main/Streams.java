@@ -9,13 +9,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 record Employee(String name, int age, int sal) {}
+record Person(String name, int age) {}
  
 public class Streams {
+	public Map<String, List<Person>> groupByName(List<Person> persons) {
+		return persons.stream()
+			.collect(Collectors.groupingBy(elem -> elem.name()));
+	}
+	
+	public Map<Integer, List<Person>> groupByAge(List<Person> persons) {
+		return persons.stream()
+			.collect(Collectors.groupingBy(Person::age));
+	}
+	
 	public String reverseWords(String sentence) {
 		return Stream.of(sentence.split(" "))
 			.map(word -> new StringBuilder(word).reverse().toString())
@@ -42,9 +54,37 @@ public class Streams {
 			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 	}
 	
+	public Map<String, Long> charsFreq(String data) {
+		return Arrays.stream(data.split(""))
+			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+	}
+	
 	public Map<String, Long> wordFrequency(List<String> words) {
 		return words.stream()
 			.collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+	}
+	
+	public String longestString(String[] strs) {
+		Map<String, Integer> strToLen = Stream.of(strs)
+				.collect(Collectors.toMap(Function.identity(), String::length));
+		return strToLen.entrySet().stream()
+				.sorted(Collections.reverseOrder(Entry.comparingByValue()))
+				.findFirst()
+				.get()
+				.getKey();
+	}
+	
+	public String longestStr(String[] strs) {
+		return Stream.of(strs)
+			.reduce((a, b) -> a.length() > b.length() ? a : b)
+			.get();
+	}
+	
+	public String maxString(String[] strs) {
+		return Stream.of(strs)
+			.filter(Objects::nonNull)
+			.max(Comparator.comparing(String::length))
+			.orElse("");
 	}
 	
 	public Map<String, Integer> findFrequency(Path root) throws Exception {
@@ -82,6 +122,7 @@ public class Streams {
 			.findFirst()
 			.orElse(Collections.emptyList());
 	}
+	
 	
 	
 	
