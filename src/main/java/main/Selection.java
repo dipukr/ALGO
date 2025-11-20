@@ -13,7 +13,7 @@ public class Selection extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int data[] = {4,10,18,6,13,1,11,17,16,9,14,15,7,3,2,8,5,12};
+	private int data[] = {4,10,6,13,1,11,16,9,14,15,7,3,2,8,5,12};
 	private int frameCount = 0;
 	
 	public Selection(int width, int height) {
@@ -43,7 +43,7 @@ public class Selection extends JPanel {
 		gc.setColor(Color.white);
 		for (int i = 0; i < data.length; i++)
 			for (int j = 0; j < data[i]; j++)
-				gc.fillRect(50 + i * 50, 900 - j * 50, 49, 49);
+				gc.fillRect(100 + i * 50, 800 - j * 50, 49, 49);
 		int minIndex = minIndex(frameCount);
 		swap(frameCount, minIndex);
 		frameCount++;
@@ -58,7 +58,7 @@ public class Selection extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.add(new Selection(1000, 1000), BorderLayout.CENTER);
+		frame.add(new Selection(1000, 900), BorderLayout.CENTER);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

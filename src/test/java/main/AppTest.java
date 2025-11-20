@@ -1,4 +1,4 @@
-package algo;
+package main;
 
 public class AppTest {
 

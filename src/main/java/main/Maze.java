@@ -16,9 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-@SuppressWarnings("all")
 public class Maze extends JPanel {
-	
 	private static final Color wallColor = new Color(39,40,34);
 	private static final String GREEN = "\u001B[32m";
 	private static final int margin = 50;
@@ -155,13 +153,15 @@ public class Maze extends JPanel {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		var path = new LinkedList<Point>();
-		if (maze.hasPath(1, 1, path)) {
+		if (maze.hasPath(1, 1, path))
 			path.addLast(new Point(1, 1));
-		}
+		
 		System.out.println(path);
+		
 		while (!path.isEmpty()) {
-			Graphics2D gc = (Graphics2D) frame.getGraphics();
+			var gc = (Graphics2D) frame.getGraphics();
 			Point point = path.removeLast();
 			int x = point.y * GS + margin / 2;
 			int y = point.x * GS + margin / 2;

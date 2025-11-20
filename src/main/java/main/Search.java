@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Arrays;
-
 public class Search {
 	public boolean linearSearch(int[] data, int key) {
 		for (int i = 0; i < data.length; i++)

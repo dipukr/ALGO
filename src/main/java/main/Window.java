@@ -3,7 +3,7 @@ package main;
 import java.util.HashSet;
 
 public class Window {
-	public int lengthOfLongestSubstring(String s) {
+	public int longestSubstrSize(String s) {
 		int start = 0, end = 0;
 		int maxLen = 0;
 		var set = new HashSet<Character>();
@@ -24,6 +24,6 @@ public class Window {
 	
 	public static void main(final String[] args) {
 		var algo = new Window();
-		System.out.println(algo.lengthOfLongestSubstring("abcabcbb"));
+		System.out.println(algo.longestSubstrSize("abcabcbb"));
 	}
 }

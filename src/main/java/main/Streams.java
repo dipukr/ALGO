@@ -123,17 +123,10 @@ public class Streams {
 			.orElse(Collections.emptyList());
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Map<Boolean, List<Path>> getAllFolderAndFiles(Path root) throws Exception {
+		return Files.walk(root)
+				.collect(Collectors.partitioningBy(Files::isDirectory));
+	}
 	
 	
 }
