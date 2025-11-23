@@ -1,29 +1,34 @@
 package main;
 
-import java.util.HashSet;
-
 public class Window {
-	public int longestSubstrSize(String s) {
-		int start = 0, end = 0;
-		int maxLen = 0;
-		var set = new HashSet<Character>();
-		while (end < s.length()) {
-			char ch = s.charAt(end);
-			if (set.contains(ch)) {
-				set.remove(s.charAt(start));
-				start++;
-			} else {
-				set.add(ch);
-				maxLen = Math.max(maxLen, end - start + 1);
-				end++;
-			}
+	public boolean isVowel(char ch) {
+		return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
+	}
+
+	public int maxVowelCountInSubstrWithSizeK(String s, int K) {
+		int vowelCount = 0;
+		for (int i = 0; i < K; i++)
+			if (isVowel(s.charAt(i)))
+				vowelCount += 1;
+		int maxCount = vowelCount;
+		for (int i = 0; i < s.length() - K; i++) {
+			if (isVowel(s.charAt(i))) vowelCount -= 1;
+			if (isVowel(s.charAt(i + K))) vowelCount += 1;
+			maxCount = Math.max(maxCount, vowelCount);
 		}
-		return maxLen;
+		return maxCount;
 	}
 	
-	
-	public static void main(final String[] args) {
-		var algo = new Window();
-		System.out.println(algo.longestSubstrSize("abcabcbb"));
+	public int minTotalPrice(int[] nums, int K) {
+		int winSum = 0;
+		for (int i = 0; i < K; i++)
+			winSum += nums[i];
+		int minTotal = winSum;
+		for (int i = 0; i < nums.length - K; i++) {
+			winSum -= nums[i];
+			winSum += nums[i + K];
+			minTotal = Math.min(minTotal, winSum);
+		}
+		return minTotal;
 	}
 }

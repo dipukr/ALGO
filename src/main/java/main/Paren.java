@@ -3,9 +3,8 @@ package main;
 import java.util.Stack;
 
 public class Paren {
-	
-	public boolean left(char c) {return c == '(' || c == '{' || c == '[';}
-	public boolean right(char c) {return c == ')'|| c == '}' || c == ']';}
+	public boolean left(char c)  {return c == '(' || c == '{' || c == '[';}
+	public boolean right(char c) {return c == ')' || c == '}' || c == ']';}
 
 	public boolean match(char a, char b) {
 		switch (a) {
@@ -16,7 +15,7 @@ public class Paren {
 		return false;
 	}
 
-	public boolean balanced(final String expression) {
+	public boolean balanced(String expression) {
 		var stack = new Stack<Character>();
 		for (char ch: expression.toCharArray()) {
 			if (left(ch)) stack.push(ch);
@@ -24,12 +23,12 @@ public class Paren {
 				if (stack.isEmpty() || !match(ch, stack.peek()))
 					return false;
 				else stack.pop();
-			} else Error.error("illegal expression");
+			} else Error.fatal("illegal expression");
 		}
 		return stack.isEmpty();
 	}
 
-	public void evaluatePrefix(final String expression) {
+	public void evaluatePrefix(String expression) {
 		var stack = new Stack<Integer>();
 		for (char ch: expression.toCharArray()) {
 			if (Character.isDigit(ch))

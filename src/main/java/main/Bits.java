@@ -45,15 +45,15 @@ public class Bits {
 	}
 
 	public boolean even(int n) {
-		return getBit(n, 0) == 0;
+		return (n & 1) == 0;
 	}
 	
 	public boolean odd(int n) {
-		return getBit(n, 0) == 1;
+		return (n & 1) == 1;
 	}
 	
-	public boolean isPowerOfTwo(int n) {
-		return false;
+	public boolean isPower2(int n) {
+		return n > 0 && (n & (n - 1)) == 0;
 	}
 	
 	public static void main(String[] args) {

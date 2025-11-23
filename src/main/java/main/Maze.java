@@ -17,14 +17,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Maze extends JPanel {
-	private static final Color wallColor = new Color(39,40,34);
+	private static final Color WALL_COLOR = new Color(39,40,34);
 	private static final String GREEN = "\u001B[32m";
-	private static final int margin = 50;
+	private static Image APPLE_IMG = null;
+	private static Image MOUSE_IMG = null;
+	private static final int MARGIN = 50;
 	private static final int GS = 40;
-	private static Image imageMouse = null;
-	private static Image imageApple = null;
 	
-	record Point(int x, int y) {}
+	record Cell(int x, int y) {}
 	
 	private int[][] maze;
 	private int rows;
@@ -35,11 +35,11 @@ public class Maze extends JPanel {
 		this.maze = maze;
 		this.rows = maze.length;
 		this.cols = maze[0].length;
-		int W = GS * cols + margin;
-		int H = GS * rows + margin;
+		int W = GS * cols + MARGIN;
+		int H = GS * rows + MARGIN;
 		setPreferredSize(new Dimension(W, H));
-		imageApple = ImageIO.read(new File("resources/apple.png"));
-		imageMouse = ImageIO.read(new File("resources/mouse.png"));
+		APPLE_IMG = ImageIO.read(new File("resources/apple.png"));
+		MOUSE_IMG = ImageIO.read(new File("resources/mouse.png"));
 	}
 
 	public boolean isValid(int row, int col) {
@@ -52,58 +52,29 @@ public class Maze extends JPanel {
 		return maze[row][col] == 9;
 	}
 	
-	public void repaint(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {}
-		this.repaint();
-	}
-
-	public boolean hasPath(int row, int col, Deque<Point> path) {
+	public boolean hasPath(int row, int col, Deque<Cell> path) {
 		if (isValid(row, col)) {
 			if (isGoal(row, col)) return true;
 			maze[row][col] = 2;
 			if (hasPath(row, col - 1, path)) {
-				path.addLast(new Point(row, col - 1));
+				path.addLast(new Cell(row, col - 1));
 				return true;
 			}
 			if (hasPath(row, col + 1, path)) {
-				path.addLast(new Point(row, col + 1));
+				path.addLast(new Cell(row, col + 1));
 				return true;
 			}
 			if (hasPath(row - 1, col, path)) {
-				path.addLast(new Point(row - 1, col));
+				path.addLast(new Cell(row - 1, col));
 				return true;
 			}
 			if (hasPath(row + 1, col, path)) {
-				path.addLast(new Point(row + 1, col));
+				path.addLast(new Cell(row + 1, col));
 				return true;
 			}
 			maze[row][col] = 0;
 		}
 		return false;
-	}
-	
-	@Override
-	public void paint(Graphics g) {
-		var gc = (Graphics2D) g;
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				int x = j * GS + margin / 2;
-				int y = i * GS + margin / 2;
-				if (maze[i][j] == 0 || maze[i][j] == 2) {
-					gc.setColor(Color.white);
-					gc.fillRect(x, y, GS, GS);
-				} else if (maze[i][j] == 1) {
-					gc.setColor(wallColor);
-					gc.fillRect(x, y, GS, GS);
-				} else if (maze[i][j] == 9) {
-					gc.drawImage(imageApple, x, y, GS, GS, this);
-				}
-				gc.setColor(Color.black);
-				gc.drawRect(x, y, GS, GS);
-			}
-		}
 	}
 	
 	public void draw() {
@@ -120,6 +91,36 @@ public class Maze extends JPanel {
 		Stream.of(maze)
 			.map(Arrays::toString)
 			.forEach(System.out::println);
+	}
+	
+	@Override
+	public void repaint(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {}
+		this.repaint();
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		var gc = (Graphics2D) g;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				int x = j * GS + MARGIN / 2;
+				int y = i * GS + MARGIN / 2;
+				if (maze[i][j] == 0 || maze[i][j] == 2) {
+					gc.setColor(Color.white);
+					gc.fillRect(x, y, GS, GS);
+				} else if (maze[i][j] == 1) {
+					gc.setColor(WALL_COLOR);
+					gc.fillRect(x, y, GS, GS);
+				} else if (maze[i][j] == 9) {
+					gc.drawImage(APPLE_IMG, x, y, GS, GS, this);
+				}
+				gc.setColor(Color.black);
+				gc.drawRect(x, y, GS, GS);
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -154,19 +155,19 @@ public class Maze extends JPanel {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		var path = new LinkedList<Point>();
+		var path = new LinkedList<Cell>();
 		if (maze.hasPath(1, 1, path))
-			path.addLast(new Point(1, 1));
+			path.addLast(new Cell(1, 1));
 		
-		System.out.println(path);
+		//System.out.println(path);
 		
-		while (!path.isEmpty()) {
+		while (path.isEmpty() == false) {
 			var gc = (Graphics2D) frame.getGraphics();
-			Point point = path.removeLast();
-			int x = point.y * GS + margin / 2;
-			int y = point.x * GS + margin / 2;
+			Cell cell = path.removeLast();
+			int x = cell.y * GS + MARGIN / 2;
+			int y = cell.x * GS + MARGIN / 2;
 			Thread.sleep(500);
-			gc.drawImage(imageMouse, x, y, GS, GS, frame);
+			gc.drawImage(MOUSE_IMG, x, y, GS, GS, frame);
 		}
 	}
 }

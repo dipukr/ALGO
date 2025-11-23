@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
 
-public class BinaryTree_R {
+public class BinaryTreeR {
 
 	public class Node {
 		public int data;
@@ -20,84 +20,29 @@ public class BinaryTree_R {
 		}
 	}
 	
-	public int size(Node node) {
-		if (node == null) return 0;
-		int leftSize = size(node.left);
-		int rightSize = size(node.right);
-		return leftSize + rightSize + 1;
-	}
-	
-	public int height(Node node) {
-		if (node == null) return 0;
-		int leftHeight = height(node.left);
-		int rightHeight = height(node.right);
-		return Math.max(leftHeight, rightHeight) + 1;
-	}
-	
-	@REM("O(N^2)")
-	public int diameter(Node root) {
-		if (root == null) return 0;
-		int diam1 = diameter(root.left);
-		int diam2 = diameter(root.right);
-		int diam3 = height(root.left) + height(root.right) + 1;
-		return Math.max(diam1, Math.max(diam2, diam3));
-	}
-	
-	
-	
-	public void visit(Node node) {
-		Console.draw("%d\t", node.data);
+	public void visitNode(Node node) {
+		System.out.printf("%d\t", node.data);
 	}
 	
 	public void preorder(Node root) {
-		if (root != null) {
-			visit(root);
-			preorder(root.left);
-			preorder(root.right);
-		}
+		if (root == null) return;
+		visitNode(root);
+		preorder(root.left);
+		preorder(root.right);
 	}
 	
 	public void inorder(Node root) {
-		if (root != null) {
-			inorder(root.left);
-			visit(root);
-			inorder(root.right);
-		}
+		if (root == null) return;
+		inorder(root.left);
+		visitNode(root);
+		inorder(root.right);
 	}
 	
 	public void postorder(Node root) {
-		if (root != null) {
-			postorder(root.left);
-			postorder(root.right);
-			visit(root);
-		}
-	}
-	
-	public void findByLevel(Node root, int level, List<Integer> data) {
 		if (root == null) return;
-		if (level == 1) data.add(root.data);
-		else if (level > 1) {
-			findByLevel(root.left, level - 1, data);
-			findByLevel(root.right, level - 1, data);
-		}
-	}
-	
-	public void levelOrderTraversal(Node root, int level) {
-		if (root == null) return;
-		if (level == 1) visit(root);
-		else if (level > 1) {
-			levelOrderTraversal(root.left, level - 1);
-			levelOrderTraversal(root.right, level - 1);
-		}
-	}
-	
-	public void levelOrderTraversal(Node root) {
-		int height = height(root);
-		for (int levelNo = 1; levelNo <= height; levelNo++) {
-			Console.draw("Level %d: ", levelNo);
-			levelOrderTraversal(root, levelNo);
-			System.out.println();
-		}
+		postorder(root.left);
+		postorder(root.right);
+		visitNode(root);
 	}
 	
 	public void DFS(Node root) {
@@ -107,75 +52,12 @@ public class BinaryTree_R {
 		Console.draw("%s\t", root.data);
 	}
 	
-	public int treeSum(Node root) {
-		if (root == null) return 0;
-		int leftSum = treeSum(root.left);
-		int rightSum = treeSum(root.right);
-		return root.data + leftSum + rightSum;
-	}
-	
-	@REM("BottomUP")
-	public Node invert(Node node) {
-		if (node != null) {
-			Node leftTree = invert(node.left);
-			Node rightTree = invert(node.right);
-			node.left = rightTree;
-			node.right = leftTree;
-		}
-		return node;
-	}
-	
-	@REM("TopDown")
-	public void invertTree(Node node) {
-		if (node != null) {
-			Node saved = node.left;
-			node.left = node.right;
-			node.right = saved;
-			invertTree(node.left);
-			invertTree(node.right);
-		}
-	}
-	
-	public List<Integer> leftView(Node root) {
-		List<Integer> answer = new ArrayList<>();
-		if (root == null) return answer;
-		Queue<Node> queue = new LinkedList<>();
-		queue.offer(root);
-		while (!queue.isEmpty()) {
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				Node node = queue.poll();
-				if (node.left != null) queue.offer(node.left);
-				if (node.right != null) queue.offer(node.right);
-				if (i == 0) answer.add(node.data);
-			}
-		}
-		return answer;
-	}
-	
-	public List<Integer> rightView(Node root) {
-		List<Integer> answer = new ArrayList<>();
-		if (root == null) return answer;
-		Queue<Node> queue = new LinkedList<>();
-		queue.offer(root);
-		while (!queue.isEmpty()) {
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				Node node = queue.poll();
-				if (node.left != null) queue.offer(node.left);
-				if (node.right != null) queue.offer(node.right);
-				if (i == size - 1) answer.add(node.data);
-			}
-		}
-		return answer;
-	}
-	
 	public void BFS(Node root) {
 		var queue = new LinkedList<Node>();
 		queue.offer(root);
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
-			System.out.printf("%s\t", node.data);
+			visitNode(node);
 			if (node.left != null)
 				queue.offer(node.left);
 			if (node.right != null)
@@ -195,7 +77,148 @@ public class BinaryTree_R {
 				stack.push(node.right);
 		}
 	}
-
+	
+	public int size(Node node) {
+		if (node == null) return 0;
+		int leftSize = size(node.left);
+		int rightSize = size(node.right);
+		return leftSize + rightSize + 1;
+	}
+	
+	public int height(Node node) {
+		if (node == null) return 0;
+		int leftHeight = height(node.left);
+		int rightHeight = height(node.right);
+		return Math.max(leftHeight, rightHeight) + 1;
+	}
+	
+	public int treeSum(Node root) {
+		if (root == null) return 0;
+		int leftSum = treeSum(root.left);
+		int rightSum = treeSum(root.right);
+		return root.data + leftSum + rightSum;
+	}
+	
+	public int treeMax(Node root) {
+		if (root == null)
+			return Integer.MIN_VALUE;
+		int leftMax = treeSum(root.left);
+		int rightMax = treeSum(root.right);
+		return Math.max(root.data, Math.max(leftMax, rightMax));
+	}
+	
+	public boolean search(Node root, int key) {
+		if (root == null) return false;
+		boolean inLeft = search(root.left, key);
+		boolean inRight = search(root.right, key);
+		return root.data == key || inLeft || inRight;
+	}
+	
+	public boolean contains(Node root, int key) {
+		if (root == null) return false;
+		if (root.data == key) return true;
+		return contains(root.left, key) || contains(root.right, key);
+	}
+	
+	@REM("BottomUP")
+	public Node reverse(Node root) {
+		if (root == null) return null;
+		Node leftTree = reverse(root.left);
+		Node rightTree = reverse(root.right);
+		root.left = rightTree;
+		root.right = leftTree;
+		return root;
+	}
+	
+	@REM("BottomUP")
+	public Node invert(Node root) {
+		if (root == null) return null;
+		Node save = invert(root.left);
+		root.left = invert(root.right);
+		root.right = save;
+		return root;
+	}
+	
+	@REM("TopDown")
+	public void invertTree(Node node) {
+		if (node == null) return;
+		Node saved = node.left;
+		node.left = node.right;
+		node.right = saved;
+		invertTree(node.left);
+		invertTree(node.right);
+	}
+	
+	@REM("O(N^2)")
+	public int diameter(Node root) {
+		if (root == null) return 0;
+		int diam1 = diameter(root.left);
+		int diam2 = diameter(root.right);
+		int diam3 = height(root.left) + height(root.right) + 1;
+		return Math.max(diam1, Math.max(diam2, diam3));
+	}
+	
+	public void findByLevel(Node root, int level, List<Integer> data) {
+		if (root == null) return;
+		if (level == 1) data.add(root.data);
+		else if (level > 1) {
+			findByLevel(root.left, level - 1, data);
+			findByLevel(root.right, level - 1, data);
+		}
+	}
+	
+	public void levelOrderTraversal(Node root, int level) {
+		if (root == null) return;
+		if (level == 1) visitNode(root);
+		else if (level > 1) {
+			levelOrderTraversal(root.left, level - 1);
+			levelOrderTraversal(root.right, level - 1);
+		}
+	}
+	
+	public void levelOrderTraversal(Node root) {
+		int height = height(root);
+		for (int levelNo = 1; levelNo <= height; levelNo++) {
+			Console.draw("Level %d: ", levelNo);
+			levelOrderTraversal(root, levelNo);
+			System.out.println();
+		}
+	}
+	
+	public List<Integer> leftView(Node root) {
+		List<Integer> answer = new ArrayList<>();
+		Queue<Node> queue = new LinkedList<>();
+		if (root == null) return answer;
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node node = queue.poll();
+				if (node.left != null) queue.offer(node.left);
+				if (node.right != null) queue.offer(node.right);
+				if (i == 0) answer.add(node.data);
+			}
+		}
+		return answer;
+	}
+	
+	public List<Integer> rightView(Node root) {
+		List<Integer> answer = new ArrayList<>();
+		Queue<Node> queue = new LinkedList<>();
+		if (root == null) return answer;
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node node = queue.poll();
+				if (node.left != null) queue.offer(node.left);
+				if (node.right != null) queue.offer(node.right);
+				if (i == size - 1) answer.add(node.data);
+			}
+		}
+		return answer;
+	}
+	
 	public void levelWiseBFS(Node root) {
 		var queue = new LinkedList<Node>();
 		queue.offer(root);
@@ -249,7 +272,7 @@ public class BinaryTree_R {
 		if (leftChild && root.left == null && root.right == null)
 			return root.data;
 		int leftSum = leftLeavesSum(root.left, true);
-		int rightSum = leftLeavesSum(root.left, true);
+		int rightSum = leftLeavesSum(root.right, false);
 		return leftSum + rightSum;
 	}
 	
@@ -297,36 +320,11 @@ public class BinaryTree_R {
 		return false;
 	}
 	
-	public boolean contains(Node root, int key) {
-		if (root == null) return false;
-		if (root.data == key) return true;
-		return contains(root.left, key) || contains(root.right, key);
-	}
-	
 	public boolean binarySearchTree(Node node) {
 		if (node == null) return true;
 		boolean valid = true;
 		if (node.left != null) valid = valid && node.left.data < node.data;
 		if (node.right != null) valid = valid && node.right.data < node.data;
 		return valid && binarySearchTree(node.left) && binarySearchTree(node.right);
-	}
-	
-	public void test() {
-		Node root = new Node(40);
-		root.left = new Node(20);
-		root.right = new Node(70);
-		root.left.left = new Node(10);
-		root.left.right = new Node(30);
-		root.right.left = new Node(60);
-		root.right.right = new Node(90);
-		List<Integer> data = new ArrayList<>();
-		levelOrderTraversal(root);
-		findByLevel(root, 3, data);
-		System.out.println(levelWiseSum(root));
-	}
-
-	public static void main(final String[] args) {
-		var tree = new BinaryTree_R();
-		tree.test();
 	}
 }

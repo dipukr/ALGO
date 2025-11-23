@@ -40,19 +40,4 @@ public class MinCoins {
 		}
 		return answer;
 	}
-	
-	public int minCoinsTB2(int[] coins, int target) {
-		int rows = coins.length + 1;
-		int cols = target + 1;
-		int[][] table = new int[rows][cols];
-		Arrays.fill(table, Integer.MAX_VALUE);
-		int answer = Integer.MAX_VALUE;
-		for (int i = 1; i < rows; i++) {
-			table[i][0] = 0;
-			for (int j = 1; j < cols; j++) {
-				
-			}
-		}
-		return answer;
-	}
 }

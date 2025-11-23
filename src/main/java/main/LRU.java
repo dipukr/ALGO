@@ -7,9 +7,10 @@ public class LRU {
 
 	public class Node {
 		public String key;
-		public Object val;
-		public Node prev, next;
-		public Node(String key, Object val) {
+		public String val;
+		public Node prev;
+		public Node next;
+		public Node(String key, String val) {
 			this.key = key;
 			this.val = val;
 		}
@@ -24,15 +25,14 @@ public class LRU {
 		this.capacity = capacity;
 	}
 	
-	public Object get(String key) {
+	public String get(String key) {
 		Node node = cache.get(key);
-		if (node == null)
-			return null;
+		if (node == null) return null;
 		moveToHead(node);
 		return node.val;
 	}
 
-	public void put(String key, Object val) {
+	public void put(String key, String val) {
 		Node node = cache.get(key);
 		if (node != null) {
 			node.val = val;
@@ -47,6 +47,11 @@ public class LRU {
 				removeNode(tail);
 			}
 		}
+	}
+	
+	public void moveToHead(Node node) {
+		removeNode(node);
+		addNodeAtHead(node);
 	}
 
 	public void addNodeAtHead(Node node) {
@@ -68,11 +73,6 @@ public class LRU {
 		else tail = node.prev;
 	}
 
-	public void moveToHead(Node node) {
-		removeNode(node);
-		addNodeAtHead(node);
-	}
-
 	public void printData() {
 		Node curr = head;
 		System.out.print("Cache state (MRU -> LRU): ");
@@ -86,15 +86,15 @@ public class LRU {
 	public static void main(String[] args) {
 		LRU cache = new LRU(3);
 
-		cache.put("A", 1);
-		cache.put("B", 2);
-		cache.put("C", 3);
+		cache.put("A", "1");
+		cache.put("B", "2");
+		cache.put("C", "3");
 		cache.printData(); // A,B,C
 
 		cache.get("A");
 		cache.printData(); // A moved to head
 
-		cache.put("D", 4); // Evicts LRU (B)
+		cache.put("D", "4"); // Evicts LRU (B)
 		cache.printData();
 
 		cache.get("C");

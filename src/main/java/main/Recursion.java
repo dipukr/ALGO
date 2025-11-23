@@ -1,38 +1,26 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recursion {
-
-	public long factorial(long n) {
-		return (n == 0) ?
-			1 :
-			n * factorial(n - 1);
-	}
-
 	public long fibonacci(long n) {
-		return (n == 1 || n == 2) ?
-			n :
-			fibonacci(n - 1) + fibonacci(n -2);
+		return (n == 1 || n == 2) ? n : fibonacci(n - 1) + fibonacci(n -2);
+	}
+	
+	public long factorial(long n) {
+		return (n == 0) ? 1 : n * factorial(n - 1);
 	}
 
 	public long sum(long n) {
-		return (n == 0) ?
-				0 :
-				n + sum(n - 1);
+		return (n == 0) ? 0 : n + sum(n - 1);
 	}
 
 	public long gcd(long a, long b) {
-		return (b == 0) ?
-				a :
-				gcd(b, a % b);			
+		return (b == 0) ? a : gcd(b, a % b);			
 	}
 
-	public long powerB(long x, long n) {
-		return (n == 0) ?
-					1 :
-					x * powerB(x, n - 1);
+	public long pow(long x, long n) {
+		return (n == 0) ? 1 : x * pow(x, n - 1);
 	}
 
 	public long power(long x, long n) {
@@ -44,9 +32,7 @@ public class Recursion {
 	}
 
 	public long digitSum(long n) {
-		return (n < 10) ?
-				n :
-				(n % 10) + digitSum(n / 10);
+		return (n < 10) ? n : (n % 10) + digitSum(n / 10);
 	}
 
 	public void printDigit(long n) {
@@ -54,8 +40,6 @@ public class Recursion {
 			printDigit(n / 10);
 		System.out.print(n % 10);
 	}
-	
-	
 
 	public void printDigit(int num, int base) {
 		if (num >= base)
@@ -136,12 +120,5 @@ public class Recursion {
 		}
 		powerSet(s, i + 1, current + s.charAt(i), powerSets);
 		powerSet(s, i + 1, current, powerSets);
-	}
-	
-	public static void main(final String[] args) {
-		var alg = new Recursion();
-		List<String> powerSets = new ArrayList<>();
-		alg.powerSet("abc", 0, "", powerSets);
-		System.out.println(powerSets);
 	}
 }

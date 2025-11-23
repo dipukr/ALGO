@@ -14,10 +14,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-record Employee(String name, int age, int sal) {}
-record Person(String name, int age) {}
- 
 public class Streams {
+	public record Person(String name, int age, int sal) {}
+	
 	public Map<String, List<Person>> groupByName(List<Person> persons) {
 		return persons.stream()
 			.collect(Collectors.groupingBy(elem -> elem.name()));
@@ -127,8 +126,6 @@ public class Streams {
 		return Files.walk(root)
 				.collect(Collectors.partitioningBy(Files::isDirectory));
 	}
-	
-	
 }
 
 

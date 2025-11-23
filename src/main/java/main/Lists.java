@@ -10,16 +10,10 @@ public class Lists {
 		}
 	}
 	
-	public void dump(Node head) {
+	public void draw(Node head) {
 		for (Node iter = head; iter != null; iter = iter.next)
 			System.out.printf("%d->", iter.data);
 		System.out.println("null");
-	}
-	
-	public void dumpReverse(Node head) {
-		if (head == null) return;
-		dumpReverse(head.next);
-		System.out.printf("%d->", head.data);
 	}
 	
 	public int size(Node head) {
@@ -45,11 +39,6 @@ public class Lists {
 		curr.next = new Node(data);
 	}
 	
-	public void appendLast(Node head, int data) {
-		if (head.next == null) head.next = new Node(data);
-		appendLast(head.next, data);
-	}
-	
 	public void insertAfter(Node after, int data) {
 		Node node = new Node(data);
 		node.next = after.next;
@@ -61,11 +50,6 @@ public class Lists {
 		while (curr.next.next != null)
 			curr = curr.next;
 		curr.next = null;
-	}
-	
-	public void deleteLast(Node head) {
-		if (head.next.next == null) head.next = null;
-		deleteLast(head.next);
 	}
 	
 	public void deleteNode(Node head, Node node) {
@@ -119,8 +103,6 @@ public class Lists {
 		return sentinel.next;
 	}
 	
-	public void evensAfterOdds(Node head) {}
-	
 	public Node reverseList(Node head) {
 		Node prev = null, curr = head;
 		while (curr != null) {
@@ -130,14 +112,6 @@ public class Lists {
 			curr = next;
 		}
 		return prev;
-	}
-	
-	public Node reverse(Node head) {
-		if (head == null || head.next == null) return head;
-		Node partial = reverse(head.next);
-		head.next.next = head;
-		head.next = null;
-		return partial;
 	}
 	
 	public Node reverseK(Node head, int k) {
@@ -196,7 +170,7 @@ public class Lists {
 	}
 	
 	public void removeCycle(Node head) {
-		if (hasCycle(head) == false) return;
+		if (!hasCycle(head)) return;
 		Node slow = head;
 		Node fast = head;
 		do {
@@ -257,7 +231,7 @@ public class Lists {
 		}
 		Node second = slow.next;
 		slow.next = null;
-		second = reverse(second);
+		second = reverseList(second);
 		Node fst = head, snd = second;
 		while (fst != null && snd != null) {
 			Node fstNext = fst.next;
@@ -276,20 +250,6 @@ public class Lists {
 		while (curr != null && curr != head)
 			curr = curr.next;
 		return curr == head;
-	}
-	
-	public void test() {
-		Node head = new Node(10);
-		for (int i = 2; i <= 10; i++)
-			addLast(head, i * 10);
-		dump(head);
-		head = reverseK(head, 4);
-		dump(head);
-	}
-	
-	public static void main(final String[] args) {
-		var list = new Lists();
-		list.test();
 	}
 }
 

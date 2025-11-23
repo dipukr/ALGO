@@ -1,6 +1,6 @@
 package main;
 
-public class List_R {
+public class ListR {
 
 	public class Node {
 		public int data;
@@ -30,7 +30,7 @@ public class List_R {
 	
 	public int size(Node head) {
 		if (head == null) return 0;
-		return 1 + size(head.next);
+		return size(head.next) + 1;
 	}
 	
 	public boolean empty(Node head) {
@@ -54,6 +54,16 @@ public class List_R {
 		return head;
 	}
 	
+	public void appendLast(Node head, int data) {
+		if (head.next == null) head.next = new Node(data);
+		appendLast(head.next, data);
+	}
+	
+	public void removeLast(Node head) {
+		if (head.next.next == null) head.next = null;
+		deleteLast(head.next);
+	}
+	
 	public void addTail(Node head, int data) {
 		if (head.next == null) {
 			head.next = new Node(data);
@@ -70,22 +80,6 @@ public class List_R {
 		deleteLast(head.next);
 	}
 	
-	public void deleteNode(Node head, Node node) {
-		Node curr = head;
-		while (curr.next != null && curr.next != node)
-			curr = curr.next;
-		if (curr.next == node)
-			curr.next = node.next;
-	}
-	
-	public void deleteByValue(Node head, int val) {
-		Node iter = head;
-		while (iter.next != null && iter.next.data != val)
-			iter = iter.next;
-		if (iter.next != null)
-			iter.next = iter.next.next;
-	}
-	
 	public boolean searchElement(Node head, int key) {
 		if (head == null) return false;
 		if (head.data == key) return true;
@@ -100,34 +94,17 @@ public class List_R {
 	
 	public Node reverse(Node head) {
 		if (head == null || head.next == null) return head;
-		Node partial = reverse(head.next);
+		Node newHead = reverse(head.next);
 		head.next.next = head;
 		head.next = null;
-		return partial;
+		return newHead;
 	}
 	
-	public Node reverseK(Node head, int k) {
-		Node prev = null, curr = head;
-		while (curr != null && k-- != 0) {
-			Node next = curr.next;
-			curr.next = prev;
-			prev = curr;
-			curr = next;
-		}
-		head.next = curr;
-		return prev;
-	}
-	
-	public Node cloneList(Node head) {
-		Node cloneHead = new Node(head.data);
-		Node clone = cloneHead;
-		Node curr = head.next;
-		while (curr != null) {
-			clone.next = new Node(curr.data);
-			clone = clone.next;
-			curr = curr.next;
-		}
-		return cloneHead;
+	public Node reverseList(Node curr, Node prev) {
+		if (curr == null) return prev;
+		Node next = curr.next;
+		curr.next = prev;
+		return reverseList(next, curr);
 	}
 	
 	public Node mergeSortedLists(Node first, Node second) {
@@ -140,20 +117,6 @@ public class List_R {
 			second.next = mergeSortedLists(first, second.next);
 			return second;
 		}
-	}
-	
-	public void test() {
-		Node first = new Node(10);
-		Node second = new Node(15);
-		addAll(first, 20,30,40,50);
-		addAll(second, 25,35);
-		draw(first);
-		draw(second);
-	}
-	
-	public static void main(final String[] args) {
-		var list = new List_R();
-		list.test();
 	}
 }
 

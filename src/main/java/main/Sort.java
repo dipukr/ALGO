@@ -8,10 +8,22 @@ public class Sort {
 	}
 
 	public void bubble(double[] data) {
-		for (int i = 0; i < data.length; i++)
+		for (int i = 0; i < data.length - 1; i++)
 			for (int j = 0; j < data.length - i - 1; j++)
 				if (data[j] > data[j + 1])
 					swap(data, j, j + 1);
+	}
+	
+	public void bubbleOPT(double[] data) {
+		for (int i = 0; i < data.length - 1; i++) {
+			boolean swapped = false;
+			for (int j = 0; j < data.length - i - 1; j++)
+				if (data[j] > data[j + 1]) {
+					swap(data, j, j + 1);
+					swapped = true;
+				}
+			if (!swapped) break;
+		}
 	}
 
 	public void selection(double[] data) {
@@ -32,6 +44,7 @@ public class Sort {
 				arr[hole] = arr[hole - 1];
 				hole--;
 			}
+			arr[hole] = elem;
 		}
 	}
 

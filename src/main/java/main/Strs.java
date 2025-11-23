@@ -23,4 +23,9 @@ public class Strs {
 		}
 		return String.valueOf(result);
 	}
+	
+	public static void main(String[] args) {
+		var algo = new Strs();
+		System.out.println(algo.compressedString("aaabbbcccc"));
+	}
 }

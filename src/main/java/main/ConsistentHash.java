@@ -5,14 +5,13 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class ConsistentHash {
-	
 	private TreeMap<Long, String> ring = new TreeMap<>();
 	private int replicaCount;
 	private MessageDigest md;
 	
 	public ConsistentHash(int replicaCount) {
 		this.replicaCount = replicaCount;
-		this.md = Commons.getSha256();
+		this.md = Commons.SHA256();
 	}
 	
 	public void addServer(String server) {
@@ -44,13 +43,13 @@ public class ConsistentHash {
 		md.update(key.getBytes());
 		byte[] digest = md.digest();
 		long hash = ((long) (digest[0] & 0xFF) << 56) |
-			((long) (digest[0] & 0xFF) << 48) |
-			((long) (digest[0] & 0xFF) << 40) |
-			((long) (digest[0] & 0xFF) << 32) |
-			((long) (digest[0] & 0xFF) << 24) |
-			((long) (digest[0] & 0xFF) << 16) |
-			((long) (digest[0] & 0xFF) << 8) |
-			((long) (digest[0] & 0xFF));
+			((long) (digest[1] & 0xFF) << 48) |
+			((long) (digest[2] & 0xFF) << 40) |
+			((long) (digest[3] & 0xFF) << 32) |
+			((long) (digest[4] & 0xFF) << 24) |
+			((long) (digest[5] & 0xFF) << 16) |
+			((long) (digest[6] & 0xFF) <<  8) |
+			((long) (digest[7] & 0xFF));
 		return hash;
 	}
 }

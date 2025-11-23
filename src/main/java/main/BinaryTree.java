@@ -285,9 +285,4 @@ public class BinaryTree {
 		findByLevel(root, 3, data);
 		System.out.println(levelWiseSum(root));
 	}
-
-	public static void main(String[] args) {
-		var tree = new BinaryTree();
-		tree.test();
-	}
 }

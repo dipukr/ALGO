@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class ConnectionPool {
+public class Connections {
 	private String url;
 	private String username;
 	private String password;
 	private BlockingQueue<Connection> connections;
 
-	public ConnectionPool(String url, String username, String password, int maxPoolSize) throws Exception {
+	public Connections(String url, String username, String password, int maxPoolSize) throws Exception {
 		this.url = url;
 		this.username = username;
 		this.password = password;
