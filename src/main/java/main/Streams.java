@@ -2,14 +2,17 @@ package main;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -124,7 +127,7 @@ public class Streams {
 	
 	public Map<Boolean, List<Path>> getAllFolderAndFiles(Path root) throws Exception {
 		return Files.walk(root)
-				.collect(Collectors.partitioningBy(Files::isDirectory));
+			.collect(Collectors.partitioningBy(Files::isDirectory));
 	}
 }
 

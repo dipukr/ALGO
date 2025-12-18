@@ -61,11 +61,11 @@ public class Lists {
 	}
 	
 	public void deleteByValue(Node head, int val) {
-		Node iter = head;
-		while (iter.next != null && iter.next.data != val)
-			iter = iter.next;
-		if (iter.next != null)
-			iter.next = iter.next.next;
+		Node curr = head;
+		while (curr.next != null && curr.next.data != val)
+			curr = curr.next;
+		if (curr.next != null)
+			curr.next = curr.next.next;
 	}
 	
 	public boolean searchElement(Node head, int key) {

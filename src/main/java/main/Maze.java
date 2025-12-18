@@ -124,7 +124,7 @@ public class Maze extends JPanel {
 	}
 
 	public static void main(String[] args) throws Exception {
-		int data[][] = {
+		int[][] data = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1},
 			{1,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1},
@@ -159,9 +159,7 @@ public class Maze extends JPanel {
 		if (maze.hasPath(1, 1, path))
 			path.addLast(new Cell(1, 1));
 		
-		//System.out.println(path);
-		
-		while (path.isEmpty() == false) {
+		while (!path.isEmpty()) {
 			var gc = (Graphics2D) frame.getGraphics();
 			Cell cell = path.removeLast();
 			int x = cell.y * GS + MARGIN / 2;
