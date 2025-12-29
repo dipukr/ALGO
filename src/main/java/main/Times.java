@@ -3,7 +3,7 @@ package main;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TimeLive {
+public class Times {
 	private record Value(String data, long time, long ttl) {}
 	private Map<String, Value> data = new HashMap<>();
 

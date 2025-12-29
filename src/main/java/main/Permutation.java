@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Permutation {
-	public List<List<Integer>> permutations(int[] data) {
-		List<List<Integer>> permutations = new ArrayList<>();
-		List<Integer> currPerm = new ArrayList<>();
-		permutations(data, currPerm, permutations);
-		return permutations;
-	}
-	
 	public List<List<Integer>> perm(int N) {
 		List<List<Integer>> permutations = new ArrayList<>();
 		List<Integer> currPerm = new ArrayList<>();
@@ -29,19 +22,14 @@ public class Permutation {
 			currPerm.remove(currPerm.size() - 1);
 		}
 	}
-
-	public void permutationsDUP(int[] elems, List<Integer> currPerm, List<List<Integer>> permutations) {
-		if (currPerm.size() == elems.length) {
-			permutations.add(new ArrayList<>(currPerm));
-			return;
-		}
-		for (int elem: elems) {
-			currPerm.add(elem);
-			permutationsDUP(elems, currPerm, permutations);
-			currPerm.remove(currPerm.size() - 1);
-		}
+	
+	public List<List<Integer>> permutations(int[] data) {
+		List<List<Integer>> permutations = new ArrayList<>();
+		List<Integer> currPerm = new ArrayList<>();
+		permutations(data, currPerm, permutations);
+		return permutations;
 	}
-
+	
 	public void permutations(int[] elems, List<Integer> currPerm, List<List<Integer>> permutations) {
 		if (currPerm.size() == elems.length) {
 			permutations.add(new ArrayList<>(currPerm));
@@ -51,6 +39,18 @@ public class Permutation {
 			if (currPerm.contains(elem)) continue;
 			currPerm.add(elem);
 			permutations(elems, currPerm, permutations);
+			currPerm.remove(currPerm.size() - 1);
+		}
+	}
+
+	public void permutationsDUP(int[] elems, List<Integer> currPerm, List<List<Integer>> permutations) {
+		if (currPerm.size() == elems.length) {
+			permutations.add(new ArrayList<>(currPerm));
+			return;
+		}
+		for (int elem: elems) {
+			currPerm.add(elem);
+			permutationsDUP(elems, currPerm, permutations);
 			currPerm.remove(currPerm.size() - 1);
 		}
 	}

@@ -6,26 +6,20 @@ import java.util.TreeMap;
 
 public class ConsistentHash {
 	private TreeMap<Long, String> ring = new TreeMap<>();
-	private int replicaCount;
 	private MessageDigest md;
 	
-	public ConsistentHash(int replicaCount) {
-		this.replicaCount = replicaCount;
-		this.md = Commons.SHA256();
+	public ConsistentHash() {
+		this.md = Commons.sha256();
 	}
 	
 	public void addServer(String server) {
-		for (int i = 0; i < replicaCount; i++) {
-			long hash = hash(server + ":" + i);
-			ring.put(hash, server);
-		}
+		long hash = hash(server);
+		ring.put(hash, server);
 	}
 	
 	public void removeServer(String server) {
-		for (int i = 0; i < replicaCount; i++) {
-			long hash = hash(server + ":" + i);
-			ring.remove(hash, server);
-		}
+		long hash = hash(server);
+		ring.remove(hash, server);
 	}
 	
 	public String getServer(String key) {

@@ -26,10 +26,4 @@ public class Mazes {
 		}
 		return ans[rows - 1][cols - 1];
 	}
-	
-	public static void main(String[] args) {
-		var a = new Mazes();
-		int ans = a.solve(3, 3);
-		System.out.println(ans);
-	}
 }

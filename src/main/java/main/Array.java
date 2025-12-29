@@ -130,7 +130,6 @@ public class Array {
 		int lhs = 0, sum = 0;
 		for (int rhs = 0; rhs < data.length; rhs++) {
 			sum += data[rhs];
-			// shrink as long as condition is satisfied
 			while (sum >= S) {
 				ans = Math.min(ans, rhs - lhs + 1);
 				sum -= data[lhs];

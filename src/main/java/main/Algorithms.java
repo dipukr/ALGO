@@ -57,13 +57,13 @@ public class Algorithms {
 	public int fibonacci(int n) {
 		int first = 0;
 		int second = 1;
-		int current = 0;
+		int next = 0;
 		for (int i = 3; i <= n; i++) {
-			current = first + second;
+			next = first + second;
 			first = second;
-			second = current;
+			second = next;
 		}
-		return current;
+		return next;
 	}
 
 	public boolean isFibonacci(int n) {
