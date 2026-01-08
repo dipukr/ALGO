@@ -6,7 +6,6 @@
 	<artifactId>ALGO</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>ALGO</name>
-	<url>http://www.example.com</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.release>21</maven.compiler.release>
